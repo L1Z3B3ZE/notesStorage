@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>ToDo List</title>
+    <title>To List</title>
     <script defer src="js/vue.js"></script>
     <script defer src="js/main.js"></script>
     <link rel="stylesheet" href="css/style.css">
@@ -10,6 +10,44 @@
 <body>
     <div id="app">
 
+        <div class="header">
+            <h1>Заметки</h1>
+            <form class="form" @submit.prevent="addTask">
+                <label for="card_title">Заголовок:</label>
+                <input id="card_title" type="text" v-model="taskTitle" required >
+
+                <label for="card_items">Введите пункты списка каждый с новой строки:</label>
+                <textarea id="card_items" v-model="newItemText" ></textarea>
+
+                <button class="formButton" type="submit">Добавить заметку</button>
+            </form>
+        </div>
+
+        <div class="columns">
+
+            <div class="Column">
+                <h2 class="columnTitle">нужно выполнить</h2>
+                <div class="card" v-for="card in column1" :key="card.id" class="card">
+                    <h3>{{ card.title }}</h3>
+                    <div>
+                        <p v-for="item in card.items" :key="item.id">
+                            <input type="checkbox" v-model="item.checked">
+                            <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="Column">
+                <h2 class="columnTitle">в процессе</h2>
+            </div>
+
+            <div class="Column">
+                <h2 class="columnTitle">выполнено</h2>
+
+            </div>
+
+        </div>
     </div>
 </body>
 </html>
