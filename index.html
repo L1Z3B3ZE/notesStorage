@@ -31,7 +31,7 @@
                     <h3>{{ card.title }}</h3>
                     <div>
                         <p v-for="item in card.items" :key="item.id">
-                            <input type="checkbox" v-model="item.checked">
+                            <input type="checkbox" v-model="item.checked" @change="checkCompletion(card)">
                             <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
                         </p>
                     </div>
@@ -40,10 +40,31 @@
 
             <div class="Column">
                 <h2 class="columnTitle">в процессе</h2>
+                <div v-for="card in column2" :key="card.id" class="card">
+                    <h3>{{ card.title }}</h3>
+                    <div>
+                        <p v-for="item in card.items" :key="item.id">
+                            <input type="checkbox" v-model="item.checked" @change="checkCompletion(card)">
+                            <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
+                        </p>
+                    </div>
+                </div>
             </div>
 
             <div class="Column">
                 <h2 class="columnTitle">выполнено</h2>
+                <div v-for="card in column3" :key="card.id" class="card">
+                    <h3>{{ card.title }}</h3>
+                    <div>
+                        <p v-for="item in card.items" :key="item.id">
+                            <input type="checkbox" v-model="item.checked" disabled>
+                            <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
+                        </p>
+                    </div>
+                    <div v-if="card.timestamp">
+                        Выполнено: {{ card.timestamp }}
+                    </div>
+                </div>
 
             </div>
 
