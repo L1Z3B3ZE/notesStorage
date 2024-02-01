@@ -19,7 +19,7 @@ let app = new Vue({
                 if (this.taskTitle !== '' && newTask.items.length >= 3 && newTask.items.length <= 5) {
                     this.column1.push(newTask);
 
-                } else alert("Введите правильные значения!!!")
+                } else alert("В заметке может быть минимум 3 и максимум 5 пунктов!!")
                 this.taskTitle = '';
                 this.newItemText = '';
                 this.saveLocalStorage()
@@ -41,7 +41,7 @@ let app = new Vue({
             else if (completionPercentage > 50 && completionPercentage < 100) {
                 if(completionPercentage > 50 && completionPercentage < 100 && this.column2.length === 5){
                     this.completeness = false
-                    alert('!!!!!')
+                    alert("в столбце находится максимальное число карточек")
                 } else {
                     this.moveCard(card, this.column1, this.column2);
                 }
