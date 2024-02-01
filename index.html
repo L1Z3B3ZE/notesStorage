@@ -2,73 +2,74 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>To List</title>
+    <title>ToDo List</title>
     <script defer src="js/vue.js"></script>
     <script defer src="js/main.js"></script>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <div id="app">
+<div id="app">
 
-        <div class="header">
-            <h1>Заметки</h1>
-            <form class="form" @submit.prevent="addTask">
-                <label for="card_title">Заголовок:</label>
-                <input id="card_title" type="text" v-model="taskTitle" required >
 
-                <label for="card_items">Введите пункты списка каждый с новой строки:</label>
-                <textarea id="card_items" v-model="newItemText" ></textarea>
+    <div class="header">
+        <h1>Заметки</h1>
+        <form class="form" @submit.prevent="addTask">
+            <label for="card_title">Заголовок:</label>
+            <input id="card_title" type="text" v-model="taskTitle" :disabled="columnTasksCount===5 && !completeness" required >
 
-                <button class="formButton" type="submit">Добавить заметку</button>
-            </form>
-        </div>
+            <label for="card_items">Введите пункты списка каждый с новой строки:</label>
+            <textarea id="card_items" v-model="newItemText" :disabled="columnTasksCount===5 && !completeness"></textarea>
 
-        <div class="columns">
-
-            <div class="Column">
-                <h2 class="columnTitle">нужно выполнить</h2>
-                <div class="card" v-for="card in column1" :key="card.id" class="card">
-                    <h3>{{ card.title }}</h3>
-                    <div>
-                        <p v-for="item in card.items" :key="item.id">
-                            <input type="checkbox" v-model="item.checked" @change="checkCompletion(card)">
-                            <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="Column">
-                <h2 class="columnTitle">в процессе</h2>
-                <div v-for="card in column2" :key="card.id" class="card">
-                    <h3>{{ card.title }}</h3>
-                    <div>
-                        <p v-for="item in card.items" :key="item.id">
-                            <input type="checkbox" v-model="item.checked" @change="checkCompletion(card)">
-                            <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
-                        </p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="Column">
-                <h2 class="columnTitle">выполнено</h2>
-                <div v-for="card in column3" :key="card.id" class="card">
-                    <h3>{{ card.title }}</h3>
-                    <div>
-                        <p v-for="item in card.items" :key="item.id">
-                            <input type="checkbox" v-model="item.checked" disabled>
-                            <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
-                        </p>
-                    </div>
-                    <div v-if="card.timestamp">
-                        Выполнено: {{ card.timestamp }}
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
+            <button class="formButton" type="submit" :disabled="columnTasksCount===5 && !completeness">Добавить заметку</button>
+        </form>
     </div>
+
+
+    <div class="columns">
+
+        <div class="Column">
+            <h2 class="columnTitle">нужно выполнить</h2>
+            <div class="card" v-for="card in column1" :key="card.id" class="card">
+                <h3>{{ card.title }}</h3>
+                <div>
+                    <p v-for="item in card.items" :key="item.id">
+                        <input type="checkbox" :disabled="columnTasksCount === 5 && !task2Check" v-model="item.checked" @change="checkCompletion(card)">
+                        <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="Column">
+            <h2 class="columnTitle">в процессе</h2>
+            <div v-for="card in column2" :key="card.id" class="card">
+                <h3>{{ card.title }}</h3>
+                <div>
+                    <p v-for="item in card.items" :key="item.id">
+                        <input type="checkbox" v-model="item.checked" @change="checkCompletion(card)">
+                        <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="Column">
+            <h2 class="columnTitle">выполнено</h2>
+            <div v-for="card in column3" :key="card.id" class="card">
+                <h3>{{ card.title }}</h3>
+                <div>
+                    <p v-for="item in card.items" :key="item.id">
+                        <input type="checkbox" v-model="item.checked" disabled>
+                        <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
+                    </p>
+                </div>
+                <div v-if="card.timestamp">
+                    Выполнено: {{ card.timestamp }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
 </body>
 </html>
