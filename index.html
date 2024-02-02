@@ -14,8 +14,13 @@
     <div class="header">
         <h1>Заметки</h1>
         <form class="form" @submit.prevent="addTask">
-            <input type="text" v-model="taskTitle" placeholder="введите заголовок заметки" required>
-            <button type="submit">добавить заметку</button>
+            <label for="card_title">Заголовок:</label>
+            <input id="card_title" type="text" v-model="taskTitle" :disabled="columnTasksCount===5 && !completeness" required >
+
+            <label for="card_items">Введите пункты списка каждый с новой строки:</label>
+            <textarea id="card_items" v-model="newItemText" :disabled="columnTasksCount===5 && !completeness"></textarea>
+
+            <button class="formButton" type="submit" :disabled="columnTasksCount===5 && !completeness">Добавить заметку</button>
         </form>
     </div>
 
@@ -23,20 +28,15 @@
     <div class="columns">
 
         <div class="Column">
-            <h1 class="columnTitle">выполнить</h1>
-            <div v-for="card in column1" :key="card.id" class="card">
+            <h2 class="columnTitle">нужно выполнить</h2>
+            <div class="card" v-for="card in column1" :key="card.id" class="card">
                 <h3>{{ card.title }}</h3>
                 <div>
                     <p v-for="item in card.items" :key="item.id">
                         <input type="checkbox" :disabled="columnTasksCount === 5 && !task2Check" v-model="item.checked" @change="checkCompletion(card)">
                         <span :class="{ 'completed': item.checked }">{{ item.text }}</span>
-
                     </p>
                 </div>
-                <form @submit.prevent="addItem(card)">
-                    <input type="text" :disabled="columnTasksCount === 5" v-model="newItemText" placeholder="Введите текст для нового пункта списка">
-                    <button type="submit" :disabled="columnTasksCount === 5">Добавить пункт</button>
-                </form>
             </div>
         </div>
 

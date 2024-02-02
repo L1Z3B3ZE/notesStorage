@@ -10,26 +10,25 @@ let app = new Vue({
     },
     methods: {
         addTask() {
-            if(this.column1.length >= 3){
-                alert('пупупу так нельзя здесь уже три карточки')
-                return
+            if (this.taskTitle !== '' && this.column1.length < 3) {
+                const newTask = {
+                    id: Date.now(),
+                    title: this.taskTitle,
+                    items: this.newItemText.split('\n').filter(item => item.trim() !== '').map(item => ({ text: item, checked: false }))
+                };
+                if (this.taskTitle !== '' && newTask.items.length >= 3 && newTask.items.length <= 5) {
+                    this.column1.push(newTask);
+
+                } else alert("В заметке может быть минимум 3 и максимум 5 пунктов!!")
+                this.taskTitle = '';
+                this.newItemText = '';
+                this.saveLocalStorage()
+            } else {
+                alert("в столбце находится максимальное число карточек")
+                this.taskTitle = '';
+                this.newItemText = '';
+
             }
-            const newTask = {
-                id: Date.now(),
-                title: this.taskTitle,
-                items: [],
-                completedItems: 0,
-                timestamp: null
-            }
-            this.column1.push(newTask);
-            this.taskTitle = '';
-        },
-        addItem(card) {
-            if (card.items.length >= 5) {
-                return;
-            }
-            card.items.push({ id: Date.now(), text: this.newItemText, checked: false });
-            this.newItemText = '';
         },
         checkCompletion(card) {
             const totalItems = card.items.length;
