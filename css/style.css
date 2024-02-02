@@ -90,6 +90,7 @@ label{
     padding: 10px 0 10px 20px;
     border-radius: 5px;
     width: 400px;
+    background-color: #b7d6ff;
 }
 .disabled{
     background-color: #253150;

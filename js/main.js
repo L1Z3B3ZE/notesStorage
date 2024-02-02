@@ -30,6 +30,28 @@ let app = new Vue({
 
             }
         },
+        addTask() {
+            if(this.column1.length >= 3){
+                alert('пупупу так нельзя здесь уже три карточки')
+                return
+            }
+            const newTask = {
+                id: Date.now(),
+                title: this.taskTitle,
+                items: [],
+                completedItems: 0,
+                timestamp: null
+            }
+            this.column1.push(newTask);
+            this.taskTitle = '';
+        },
+        addItem(card) {
+            if (card.items.length >= 5) {
+                return;
+            }
+            card.items.push({ id: Date.now(), text: this.newItemText, checked: false });
+            this.newItemText = '';
+        },
         checkCompletion(card) {
             const totalItems = card.items.length;
             const completedItems = card.items.filter(item => item.checked).length;
